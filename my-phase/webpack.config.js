@@ -1,7 +1,8 @@
 var path = require('path');
- 
+var debug = process.env.NODE_ENV !== "production";
 var config = {
   context: path.join(__dirname, 'src'),
+  devtool: debug ? "inline-sourcemap" : null,
   entry: [
     './main.js',
   ],

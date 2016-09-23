@@ -1,14 +1,9 @@
 import React from 'react';
-import Snackbar from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/action/reorder';
-import IconMenu from 'material-ui/IconMenu';
-import Menu from 'material-ui/Menu/Menu';
-import MenuItem from 'material-ui/MenuItem/MenuItem';
-import CircularProgress from 'material-ui/CircularProgress';
-import Paper from 'material-ui/Paper';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import {Grid, Cell} from 'react-mdl';
+import Data from './json';
 /**
  * A counter button: tap the button to increase the count.
  */
@@ -29,42 +24,55 @@ class Counter extends React.Component {
     super();
     this.state = {
       count: 0,
+      showShortNews:false,
+      news:Data.newsFeed,
     };
   }
- 
+ _showNewsFeed(){
+    return this.state.news.posts.map((values)=> {
+      return(
+              <Grid key={values.uuid}>
+              <Cell col={6}/>
+                <Cell col={6}>
+                  <Card
+                  style={{width:'600px',marginLeft:'25%',clear:'both',float:'left',position:'relative',marginBottom:'2%'}}
+                   onExpandChange={(event)=> {console.log(event);this.setState({showShortNews:event})}}>
+                     <CardHeader
+                        title={values.author != "" ? values.author.toUpperCase() : 'ANONYMOUS'}
+                        subtitle={values.published}
+                        
+                    />
+                    <CardMedia 
+                      overlay={<CardTitle title={values.title}/>}
+                    >
+                      <img height="350px" src={values.thread.main_image}/>
+                    </CardMedia>
+                    <CardText hidden={this.state.showShortNews}>
+                      {values.text.substring(0,555)}...
+                    </CardText>
+                    <CardHeader
+                      actAsExpander={true}
+                      showExpandableButton={true}/>
+                    <CardText expandable={true}>
+                       {values.text}
+                    </CardText>
+                    <CardActions>
+                      <FlatButton label="Like" />
+                      <FlatButton label="Comment" />
+                    </CardActions>
+                  </Card>
+                </Cell>
+              </Grid>
+          );
+    });
+ }
   render() {
+    console.log('Data',Data.newsFeed);
     return (
-      <Card>
-        <CardHeader
-          title="URL Avatar"
-          subtitle="Subtitle"
-          avatar="images/jsa-128.jpg"
-        />
-        <CardMedia
-          overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-        >
-          <img src="images/nature-600-337.jpg" />
-        </CardMedia>
-        <CardTitle title="Card title" subtitle="Card subtitle" />
-        <CardText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
-        <CardActions>
-           <FlatButton
-              label="Count:"
-              labelPosition="before"
-              primary={true}
-              style={styles.exampleImageInput}
-              onClick={() => {
-                this.setState({ count: this.state.count + 1 });
-              }}
-              icon={<ActionAndroid />}
-            />{this.state.count}
-        </CardActions>
-      </Card>
+      
+       <div>
+      {this._showNewsFeed()}
+  </div>
       
     );
   }
