@@ -16,7 +16,7 @@ module.exports = {
 	        "section_title": "Yahoo News - Latest News & Headlines",
 	        "title": "US soldier killed in anti-Taliban operation in Afghanistan",
 	        "title_full": "US soldier killed in anti-Taliban operation in Afghanistan",
-	        "published": "2016-08-24T03:00:00.000+03:00",
+	        "published": "2016-08-20T03:00:00.000+03:00",
 	        "replies_count": 10,
 	        "participants_count": 7,
 	        "site_type": "news",

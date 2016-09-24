@@ -1,5 +1,6 @@
 
 import Counter from './Counter';
+import Study from './study';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -29,7 +30,7 @@ const muiTheme = getMuiTheme({
 document.addEventListener('DOMContentLoaded', function() {
 ReactDOM.render((
 	<MuiThemeProvider muiTheme={muiTheme}>
-		<Counter/>
+		<Study/>
 	</MuiThemeProvider>
 ), document.getElementById('mount'));
 });
